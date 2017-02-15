@@ -7,6 +7,7 @@
 
 ## 组件分析
 
+* [syncedmem](module/syncedmem.md)
 * [blob](module/blob.md)
 
 ## 其他

@@ -1,13 +1,15 @@
 ## 代码结构
 ```
-caffe.cloc                // 配置文件：代码统计工具cloc
-.Doxyfile                 // 配置文件：文档生成工具doxygen
-.travis.yml               // 配置文件：持续集成工具TravisCI
-cmake/                    // 配置文件：cmake
-CMakeLists.txt            // 配置文件：cmake
-Makefile                  // 配置文件：make
-Makefile.config           // 配置文件：make
-Makefile.config.example   // 配置文件：make
+caffe.cloc                // 配置：代码统计工具cloc
+.Doxyfile                 // 配置：文档生成工具doxygen
+.travis.yml               // 配置：持续集成工具TravisCI
+cmake/                    // 配置：cmake
+CMakeLists.txt            // 配置：cmake
+Makefile                  // 配置：make
+Makefile.config           // 配置：make
+Makefile.config.example   // 配置：make
+build -> .build_release/  // 编译：编译结果存放位置
+distribute/               // 编译：生成发布包的位置，用于迁移
 models/                   // 文档：示例模型alexnet,googlenet,rcnn
 docs/                     // 文档：caffe官方文档
 examples/                 // 文档：caffe使用手册（ipython）
