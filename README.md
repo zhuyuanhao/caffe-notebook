@@ -1,33 +1,8 @@
-Caffe是纯粹的C++/CUDA架构，支持命令行、Python和MATLAB接口；可以在CPU和GPU直接无缝切换。9k行C++代码，20k行测试。
-Caffe完全使用文本来定义和训练(optimization）模型。
-
-# 资源
-* homepage：http://caffe.berkeleyvision.org/
-* github：https://github.com/bvlc/caffe
-* caffe api doc：http://caffe.berkeleyvision.org/doxygen/annotated.html
-* caffe模型结果：http://dl.caffe.berkeleyvision.org/
-* model zoo：http://caffe.berkeleyvision.org/model_zoo.html（Official）https://github.com/BVLC/caffe/wiki/Model-Zoo（Community）
-
-* 物体识别demo：http://demo.caffe.berkeleyvision.org/
-* Scene Recognition 场景识别：http://places.csail.mit.edu/
-* Object Detection 物体检测：https://github.com/rbgirshick/fast-rcnn https://github.com/rbgirshick/py-faster-rcnn
-* Semantic Segmentation：https://github.com/shelhamer/fcn.berkeleyvision.org
-* Long-term Recurrent Convolutional Network（LSTM）：http://jeffdonahue.com/lrcn/
-* Deep Visuomotor Control：http://rll.berkeley.edu/gps/
-* Embedded Caffe：https://github.com/BVLC/caffe/tree/opencl
-https://github.com/sh1r0/caffe-android-demo
-https://github.com/sh1r0/caffe-android-lib
-http://www.nvidia.com/object/jetson-tx1-dev-kit.html
-http://www.nvidia.com/object/jetson-tk1-embedded-dev-kit.html
-* Caffe on Docker：https://github.com/BVLC/caffe/tree/master/docker
-
 # 代码分析
 ## 总体结构
 Net由Layer组成，Layer之间可以是任意的DAG关系。Layer之间通过Blob做数据传递，数据从Layer的bottom blob(s)传输到top blob(s)。
 
 Caffe使用Protobuf文本格式（plaintext protocol buffer schema）定义Solver、Net、Layer。描述这些组件的文本格式的定义都放在caffe.proto文件中。
-
-
 
 ## 输入数据
 caffe输入数据可以是数据库（lmdb(default)，leveldb），内存文件，磁盘文件（hdf5/.mat/图片格式）等格式。caffe为我们提供tools/convert_imageset.cpp文件。编译之后，生成对应的可执行文件放在 buile/tools/ 下面，这个文件的作用就是用于将图片文件转换成caffe框架中能直接使用的db文件。
@@ -114,13 +89,15 @@ caffe train -solver examples/mnist/lenet_solver.prototxt -gpu all
 caffe train -solver examples/mnist/lenet_solver.prototxt -snapshot examples/mnist/lenet_iter_5000.solverstate
 # fine-tune CaffeNet model weights for style recognition
 caffe train -solver examples/finetuning_on_flickr_style/solver.prototxt -weights models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel
-
+```
 Testing
+```
 # score the learned LeNet model on the validation set as defined in the
 # model architeture lenet_train_test.prototxt
 caffe test -model examples/mnist/lenet_train_test.prototxt -weights examples/mnist/lenet_iter_10000.caffemodel -gpu 0 -iterations 100
 ```
 Benchmarking
+```
 # (These example calls require you complete the LeNet / MNIST example first.)
 # time LeNet training on CPU for 10 iterations
 caffe time -model examples/mnist/lenet_train_test.prototxt -iterations 10
@@ -128,10 +105,12 @@ caffe time -model examples/mnist/lenet_train_test.prototxt -iterations 10
 caffe time -model examples/mnist/lenet_train_test.prototxt -gpu 0
 # time a model architecture with the given weights on the first GPU for 10 iterations
 caffe time -model examples/mnist/lenet_train_test.prototxt -weights examples/mnist/lenet_iter_10000.caffemodel -gpu 0 -iterations 10
-
+```
 Diagnostics
+```
 # query the first device
 caffe device_query -gpu 0
+```
 
 # 性能
 K40（ECC off减少内存占用，boost clock enabled加快始终频率，cuDNN）
