@@ -1,4 +1,4 @@
-`SyncedMemory`类可以看作一个`void*`类型的数组，这个数组可以在CPU和GPU的代码中访问，数据在CPU和GPU之间按需同步。
+`SyncedMemory`类可以看作一个`void*`类型的数组，这个数组可以在CPU和GPU的代码中访问，数组数据在CPU和GPU之间按需同步。
 # 文件
 ```
 include/caffe/syncedmem.hpp
