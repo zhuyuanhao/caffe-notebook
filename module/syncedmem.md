@@ -6,11 +6,13 @@ src/caffe/syncedmem.cpp
 ```
 # 依赖
 CPU中的内存可以使用`malloc`分配普通内存，也可以使用`cudaMallocHost`分配cuda pinned cpu memory。
-在`include/caffe/syncedmem.hpp`中定义了一组分配/释放函数，当当前环境是是`Caffe::mode() == Caffe::GPU`时，将使用cuda pinned memory，这样避免了dynamic pinning for transfers(DMA)，在多卡时速度更快更稳定。
+在`include/caffe/syncedmem.hpp`中定义了一组分配/释放函数
 ```cpp
 void CaffeMallocHost(void** ptr, size_t size, bool* use_cuda);
 void CaffeFreeHost(void* ptr, bool use_cuda)
 ```
+当当前环境是是`Caffe::mode() == Caffe::GPU`时，将使用cuda pinned memory，避免使用普通的dynamic pinning for transfers(DMA)，在多卡时速度更快也更稳定。
+
 
 # 成员
 ```cpp
@@ -40,14 +42,12 @@ class SyncedMemory {
   enum SyncedHead { UNINITIALIZED, HEAD_AT_CPU, HEAD_AT_GPU, SYNCED };
   SyncedHead head() { return head_; }
   size_t size() { return size_; }
-
 #ifndef CPU_ONLY
   void async_gpu_push(const cudaStream_t& stream);  // 在stream中使用将CPU数据异步方式同步到GPU，在data prefetch时使用
 #endif
 
  private:
   void check_device();          // 检查当前线程对应的GPU ID是否和新建时保存在device_中的GPU ID一致
-
   void to_cpu();                // 按需同步数据到CPU
   void to_gpu();                // 按需同步数据到GPU
   void* cpu_ptr_;               // CPU中内存块的首地址
@@ -58,7 +58,6 @@ class SyncedMemory {
   bool cpu_malloc_use_cuda_;    // cpu_ptr_指向的内存是否是pinned memory
   bool own_gpu_data_;           // gpu_ptr_的内存是否是自己分配的，若是，要负责释放
   int device_;                  // 记录新建内存时的GPU ID
-
   DISABLE_COPY_AND_ASSIGN(SyncedMemory);    // 禁用拷贝构造和赋值运算符
 };  // class SyncedMemory
 
