@@ -1,4 +1,4 @@
-`SyncedMemory`类可以看作一个`void*`类型的数组，这个数组内部提供了CPU和GPU间的数据按需同步。
+`SyncedMemory`类可以看作一个`void*`类型的数组，这个数组可以在CPU和GPU的代码中访问，数据在CPU和GPU之间按需同步。
 
 # 文件
 ```
@@ -6,10 +6,9 @@ include/caffe/syncedmem.hpp
 src/caffe/syncedmem.cpp
 ```
 # 依赖
+CPU中的内存可以使用`malloc`分配普通内存，也可以使用`cudaMallocHost`分配cuda pinned cpu memory。
+在`include/caffe/syncedmem.hpp`中定义了一组函数，当当前环境是是`Caffe::mode() == Caffe::GPU`时，将使用cuda pinned memory。
 ```cpp
-/* 通过Caffe::mode()函数判断当前模式
-
-*/
 void CaffeMallocHost(void** ptr, size_t size, bool* use_cuda);
 void CaffeFreeHost(void* ptr, bool use_cuda)
 ```
