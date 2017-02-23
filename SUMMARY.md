@@ -9,6 +9,7 @@
 
 * [syncedmem](module/syncedmem.md)
 * [blob](module/blob.md)
+* [layer](module/layer.md)
 
 ## 其他
 

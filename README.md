@@ -13,18 +13,6 @@ lmdb和leveldb
 - 因此lmdb取代了leveldb成为Caffe默认的数据集生成格式。
 
 ## 代码组件
-### Blob
-Blob提供统一的数据抽象。数据都按照N维数组存储，使用C的连续格式（行优先），内存空间惰性分配，CPU和GPU之间的数据按需同步。
-一般格式：
-- 对于数据：(Batch)Number*Channel*Height*Width
-- 对于卷积权重：Output*Input*Height*Width
-- 对于卷积偏置：Output*1*1*1
-
-实现细节：
-- reshape函数申明数据大小。（惰性分配？）
-- blob包含两类数据：data和diff。diff存储网络计算出来的梯度(gradient)
-- 获取不可修改数据：const Dtype* cpu_data() const; 获取可修改数据：Dtype* mutable_cpu_data();
-- 使用SyncedMem类同步CPU和GPU的数据，每次调用mutable_*函数后再切换到另一个设备都会涉及数据拷贝操作。所以尽量使用非mutable_*函数获取数据，并且不保存数据指针(防止修改)。
 
 ### Layer
 主要包含setup，forward，backward函数。Forward和Backward函数都包含CPU和GPU版本，可以只实现CPU版本（用于快速验证），此时数据会在GPU和CPU间做两次拷贝。
