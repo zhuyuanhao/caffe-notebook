@@ -7,10 +7,33 @@ src/caffe/blob.cpp
 ```
 
 # 依赖
-使用`SyncedMemory`保存实际的数据，并使用`share_ptr`管理`SyncedMemory`对象。计算统计值时会用到对应的`blas`函数在CPU或GPU端完成。
+1. 使用`SyncedMemory`保存实际的数据
+2. 使用`share_ptr`管理`SyncedMemory`对象，所以`Blob`没有自己实现析构函数
+3. 计算统计值时会用到对应CPU或GPU端的`blas`函数完成，函数定义在`include/caffe/util/math_functions.hpp`
+4. 通过`src/caffe/proto/caffe.proto`文件中定义的`BlobProto`类来完成`Blob`的存储。         
 
-# 要点
-初始化函数实际使用Reshape去设置内部变量，注意此时内部SyncedMemory的内部是没有分配内存的，需要调用对应内存访问函数后才会分配内存。
+```protobuf
+message BlobShape {
+  repeated int64 dim = 1 [packed = true];
+}
+
+message BlobProto {
+  optional BlobShape shape = 7; 
+  repeated float data = 5 [packed = true];
+  repeated float diff = 6 [packed = true];
+  repeated double double_data = 8 [packed = true];
+  repeated double double_diff = 9 [packed = true];
+
+  optional int32 num = 1 [default = 0];
+  optional int32 channels = 2 [default = 0];
+  optional int32 height = 3 [default = 0];
+  optional int32 width = 4 [default = 0];
+}
+
+message BlobProtoVector {
+  repeated BlobProto blobs = 1; 
+}
+```
 
 # 成员
 ```cpp
@@ -35,71 +58,26 @@ class Blob {
   const int* gpu_shape() const;                         // 返回表示维度大小的数组在GPU上的指针，即shape_data_->gpu_data()
   inline int shape(int index) const;
   inline int CanonicalAxisIndex(int axis_index) const;  // 将正索引或负索引统一转为正索引。例如共4维时，[-4,3] -> [0,3]
-
   
   // 查询维度，如4维
   inline int num_axes() const { return shape_.size(); }
 
   // 统计全部或区间内元素个数
-  inline int count() const { return count_; }
-  inline int count(int start_axis, int end_axis) const {
-    CHECK_LE(start_axis, end_axis);
-    CHECK_GE(start_axis, 0);
-    CHECK_GE(end_axis, 0);
-    CHECK_LE(start_axis, num_axes());
-    CHECK_LE(end_axis, num_axes());
-    int count = 1;
-    for (int i = start_axis; i < end_axis; ++i) {       // 左闭右开，[start_axis, end_axis)
-      count *= shape(i);
-    }
-    return count;
-  }
-  inline int count(int start_axis) const {
-    return count(start_axis, num_axes());
-  }
-
+  inline int count() const;
+  inline int count(int start_axis, int end_axis) const;
+  inline int count(int start_axis) const;
+  
   // 老版本的维度访问函数
   inline int num() const { return LegacyShape(0); }
   inline int channels() const { return LegacyShape(1); }
   inline int height() const { return LegacyShape(2); }
   inline int width() const { return LegacyShape(3); }
-  inline int LegacyShape(int index) const {
-    CHECK_LE(num_axes(), 4)
-        << "Cannot use legacy accessors on Blobs with > 4 axes.";
-    CHECK_LT(index, 4);
-    CHECK_GE(index, -4);
-    if (index >= num_axes() || index < -num_axes()) {   // 老版本中的特殊处理
-      return 1;
-    }
-    return shape(index);
-  }
+  inline int LegacyShape(int index) const;
 
   // 计算blob的多维下标在实际SyncedMemory中的位置
   inline int offset(const int n, const int c = 0, const int h = 0,
-      const int w = 0) const {
-    CHECK_GE(n, 0);
-    CHECK_LE(n, num());
-    CHECK_GE(channels(), 0);
-    CHECK_LE(c, channels());
-    CHECK_GE(height(), 0);
-    CHECK_LE(h, height());
-    CHECK_GE(width(), 0);
-    CHECK_LE(w, width());
-    return ((n * channels() + c) * height() + h) * width() + w;
-  }
-  inline int offset(const vector<int>& indices) const {
-    CHECK_LE(indices.size(), num_axes());
-    int offset = 0;
-    for (int i = 0; i < num_axes(); ++i) {
-      offset *= shape(i);
-      if (indices.size() > i) {
-        CHECK_GE(indices[i], 0);
-        CHECK_LT(indices[i], shape(i));
-        offset += indices[i];
-      }
-    }
-    return offset;
-  }
+      const int w = 0) const;
+  inline int offset(const vector<int>& indices) const;
 
   // 拷贝其他blob的data或者diff数据，通过copy_diff参数判断。如果源blob和自己维度不一致，需要设reshape参数为true
   void CopyFrom(const Blob<Dtype>& source, bool copy_diff = false,
@@ -107,29 +85,15 @@ class Blob {
 
   // 查询多位数组中的某个元素的data或diff值
   inline Dtype data_at(const int n, const int c, const int h,
-      const int w) const {
-    return cpu_data()[offset(n, c, h, w)];
-  }
+      const int w) const;
   inline Dtype diff_at(const int n, const int c, const int h,
-      const int w) const {
-    return cpu_diff()[offset(n, c, h, w)];
-  }
-  inline Dtype data_at(const vector<int>& index) const {
-    return cpu_data()[offset(index)];
-  }
-  inline Dtype diff_at(const vector<int>& index) const {
-    return cpu_diff()[offset(index)];
-  }
+      const int w) const;
+  inline Dtype data_at(const vector<int>& index) const;
+  inline Dtype diff_at(const vector<int>& index) const;
 
   // 获取内部SyncedMemory的指针
-  inline const shared_ptr<SyncedMemory>& data() const {
-    CHECK(data_);
-    return data_;
-  }
-  inline const shared_ptr<SyncedMemory>& diff() const {
-    CHECK(diff_);
-    return diff_;
-  }
+  inline const shared_ptr<SyncedMemory>& data() const;
+  inline const shared_ptr<SyncedMemory>& diff() const;
 
   // 返回或设置data多维数组的指针
   const Dtype* cpu_data() const;
@@ -145,7 +109,6 @@ class Blob {
   Dtype* mutable_cpu_diff();
   Dtype* mutable_gpu_diff();
 
-  // Update, *Proto*, *sum/scale*函数都不允许使用int/unsigned版本，只实例化了float/double版本
   // 更新data多维数组，即计算data_ -= diff_
   void Update();
 
@@ -180,3 +143,20 @@ class Blob {
   DISABLE_COPY_AND_ASSIGN(Blob);
 };  // class Blob
 ```
+
+# 实现要点
+1. 初始化函数实际使用Reshape去设置内部变量，注意此时内部SyncedMemory的内部是没有分配内存的，需要调用对应内存访问函数后才会分配内存。
+2. 在`set_cpu_data`或`set_gpu_data`的实现中，如果内部`data_`是`reshape()`变小过的，则传入的数据块的大小比内部`data_`的长度要小，所以需要重设`data_`和`diff_`，以防止`data_`在cpu和gpu端的内存块大小不一致而导致的同步错误。
+```cpp
+template <typename Dtype>
+void Blob<Dtype>::set_gpu_data(Dtype* data) {
+  CHECK(data);
+  size_t size = count_ * sizeof(Dtype);
+  if (data_->size() != size) {
+    data_.reset(new SyncedMemory(size));
+    diff_.reset(new SyncedMemory(size));
+  }
+  data_->set_gpu_data(data);
+}
+```
+3. `Update, *Proto*, *sum/scale*`函数都不允许使用`int/unsigned`版本，只实例化了`float/double`版本
