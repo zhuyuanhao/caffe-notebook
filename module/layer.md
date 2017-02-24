@@ -35,7 +35,7 @@ message NetStateRule {                      // 网络状态类规则类，用于
   repeated string not_stage = 5;
 }
 
-message ParamSpec {                         // 训练参数类
+message ParamSpec {                         // 训练参数类，每个内部blob对应一个param，配置文件中param个数可以比内部blob数少
   optional string name = 1;                 // 在layer间共享训练参数时使用，其他情况下留空
   optional DimCheckMode share_mode = 2;     // layer间共享时是否需要对应的blob内部参数的维度一致
   enum DimCheckMode {
@@ -133,7 +133,7 @@ class Layer {
   
   // 虚函数，是否自动产生需要数目的top blobs，在Net::Init中调用
   virtual inline bool AutoTopBlobs() const;
-  // 虚函数，是否某个bottom blob允许强制计算Backward
+  // 虚函数，是否某个bottom blob允许NetParameter中设置的强制计算BP起作用
   virtual inline bool AllowForceBackward(const int bottom_index) const;
 
  protected:

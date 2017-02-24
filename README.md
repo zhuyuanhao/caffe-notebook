@@ -15,7 +15,6 @@ lmdb和leveldb
 ## 代码组件
 
 ### Layer
-主要包含setup，forward，backward函数。Forward和Backward函数都包含CPU和GPU版本，可以只实现CPU版本（用于快速验证），此时数据会在GPU和CPU间做两次拷贝。
 主要类型：
 http://caffe.berkeleyvision.org/tutorial/layers.html
 https://github.com/Yangqing/caffe/wiki/Convolution-in-Caffe:-a-memo
@@ -42,9 +41,6 @@ Data (Layer)
 数据会被预处理，并且使用prefetch优化，即计算当前数据时，预先读取下一个batch的数据。
 
 ### Net
-由Layer按照DGA方式组合而成，Layer之间通过Blob交换数据，还能通过sharedweights共享Blob。一个典型的网络以data layer开始，用于从存储设备载入图片或音频数据（以及label数据），以loss layer结束，用于计算分类或预测任务的损失值。Net的Forward过程又称为inference，Net::Forward从输入数据开始，经过每个Layer的Forward函数，最终在Loss Layer获得loss值。Backward过程又称为learning，Net::Backward从loss值开始，使用链式规则计算每个Layer的梯度值并保存。
-初始化时，Net会生成所有需要的Blobs和Layers并建立它们之间的连接关系，检查是否满足DAG约束。所有的数据计算和传递都是通过Net中的相应函数控制。
-Net本身并不考虑是在CPU还是GPU上运算，通过Caffe::mode()和Caffe::set_mode()函数，各个Blobs和Layers自己选择是在CPU还是GPU上执行。
 
 ### Solver
 Solver负责网络参数的更新，通过使用不同的规则控制梯度（gradients）更新到参数（parameter）中的方式。

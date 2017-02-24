@@ -1,6 +1,6 @@
 `layer`使用工厂模式来产生类的对象。类通过宏定义将自己在工厂的字典中注册，使用时使用类型名字符串做为key得到`layer`的实例对象。
 
-对于某些`layer`类型，Caffe提供了自己的实现和CUDNN的实现，在编译时通过选项`USE_CUDNN := 1`选择。
+对于某些`layer`类型，Caffe提供了自己的实现和CUDNN的实现，在运行时通过参数`engine`选择。
 
 # 文件
 ```
@@ -8,7 +8,7 @@ include/caffe/layer_factory.hpp
 src/caffe/layer_factory.cpp
 ```
 
-# 成员
+# 对象
 ```cpp
 // 注册工具类，不能被实例化，提供静态函数和字典变量完成Layer的注册和新建Layer
 // 注册使用AddCreator函数，新建Layer使用CreateLayer函数
@@ -67,6 +67,68 @@ class LayerRegisterer {
 
 }  // namespace caffe
 ```
+```cpp
+// 对CUDNN中有的Layer，以及Python Layer，在这里完成注册
+// Creator函数在新建Layer时根据Layer名和engine参数选择合适的实现(CAFFE或CUDNN)
+
+// 默认选择CAFFE的实现，某些参数CUDNN不支持的也选择CAFFE的实现
+// 包括：Convolution, Pooling, LRN, ReLU, Sigmoid, Softmax, TanH
+template <typename Dtype>
+shared_ptr<Layer<Dtype> > GetConvolutionLayer(
+    const LayerParameter& param) {
+  ConvolutionParameter conv_param = param.convolution_param();
+  ConvolutionParameter_Engine engine = conv_param.engine();
+#ifdef USE_CUDNN
+  bool use_dilation = false;
+  for (int i = 0; i < conv_param.dilation_size(); ++i) {
+    if (conv_param.dilation(i) > 1) {
+      use_dilation = true;
+    }
+  }
+#endif
+  if (engine == ConvolutionParameter_Engine_DEFAULT) {
+    engine = ConvolutionParameter_Engine_CAFFE;
+#ifdef USE_CUDNN
+    if (!use_dilation) {
+      engine = ConvolutionParameter_Engine_CUDNN;
+    }
+#endif
+  }
+  if (engine == ConvolutionParameter_Engine_CAFFE) {
+    return shared_ptr<Layer<Dtype> >(new ConvolutionLayer<Dtype>(param));
+#ifdef USE_CUDNN
+  } else if (engine == ConvolutionParameter_Engine_CUDNN) {
+    if (use_dilation) {
+      LOG(FATAL) << "CuDNN doesn't support the dilated convolution at Layer "
+                 << param.name();
+    }
+    return shared_ptr<Layer<Dtype> >(new CuDNNConvolutionLayer<Dtype>(param));
+#endif
+  } else {
+    LOG(FATAL) << "Layer " << param.name() << " has unknown engine.";
+    throw;  // Avoids missing return warning
+  }
+}
+
+REGISTER_LAYER_CREATOR(Convolution, GetConvolutionLayer);
+```
+# 实现细节
+1. 在`include/caffe/layer_factory.hpp`中定义了注册类，注册时使用宏
+```cpp
+REGISTER_LAYER_CLASS(type)            # 使用默认的Creator
+REGISTER_LAYER_CREATOR(type, creator)
+```
+使用时用静态函数
+```cpp
+shared_ptr<Layer<Dtype>> CreateLayer(const LayerParameter& param)
+```
+返回对应的一个`layer`对象
+
+2. 在`src/caffe/layer_factory.cpp`注册了一些`layer`，使用特殊的`Creator`函数，使这些`layer`可以在运行时通过`engine`参数选择`CAFFE`或`CUDNN`实现的对象
+3. 类型名一般使用对应Layer的类名去掉最后的字符串Layer，比如`class ReLULayer`使用`ReLU`作为注册的类名
+
+
+
 
 
 
