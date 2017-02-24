@@ -8,6 +8,8 @@ include/caffe/layer.hpp
 src/caffe/layer.cpp
 include/caffe/layer_factory.hpp
 src/caffe/layer_factory.cpp
+include/caffe/layers/*.hpp
+src/caffe/layers/*.cpp
 ```
 # 依赖
 1. `layer`中数据均采用`Blob`类保存，包括输入、输出、内部参数
