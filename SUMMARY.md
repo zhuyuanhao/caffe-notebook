@@ -10,6 +10,7 @@
 * [syncedmem](module/syncedmem.md)
 * [blob](module/blob.md)
 * [layer](module/layer.md)
+    * [layer注册机制](module/layer_register.md)
 
 ## 其他
 

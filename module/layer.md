@@ -1,5 +1,7 @@
 `layer`可以看作一个函数，读取0个或多个`blob`的数据作为输入，和内部保存的数据（也使用`blob`格式存储）进行计算后将结果输出到0或多个`blob`。
 
+`layer`使用工厂函数，通过表示类型的字符串来注册和新建。在`LayerParemter`中使用`type`字段，在`Layer`中使用虚函数`char* type()`。
+
 # 文件
 ```
 include/caffe/layer.hpp
@@ -157,5 +159,6 @@ class Layer {
   DISABLE_COPY_AND_ASSIGN(Layer);
 };
 ```
-// 检查7项，包括{ExactNum,Min,Max} {Bottom,Top}和Bottom Equal Top 
-// loss weight不仅保存在Layer的loss_数组中，对应top blob的diff的所有元素都赋值为loss weight
+# 实现细节
+1. `CheckBlobCounts`函数检查7项，包括`{ExactNum,Min,Max} {Bottom,Top}`和`Bottom Equal Top` 
+2. `SetLossWeights`函数将loss weight保存在Layer的loss_数组中，也将对应top blob的diff数组的所有元素都赋值为loss weight。这样在计算loss时，用blob的data数组点乘diff数组就可以得到
