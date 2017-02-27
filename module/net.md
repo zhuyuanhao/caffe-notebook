@@ -7,6 +7,14 @@
 `net`本身并不考虑是在CPU还是GPU上运算，通过`Caffe::mode()`和`Caffe::set_mode()`函数，各个Blobs和Layers自己选择是在CPU还是GPU上执行。
 
 # 依赖
+1. `InsertSplit()`函数用于为`net`中的需要被多个`layer`使用的每个`bottom blob`添加一个`_split`层，输入一个`blob`，输出多个`blob`供其他`layer`使用。定义文件
+```
+include/caffe/util/insert_splits.hpp
+src/caffe/util/insert_splits.cpp
+```
+
+1. NetParameter用于描述网络
+
 ```protobuf
 message NetState {                          // 网络状态类
   optional Phase phase = 1 [default = TEST];
@@ -25,7 +33,7 @@ message NetParameter {
   optional NetState state = 6;                      // 网络状态，包括phase，level，stage。用于某些layer的include/exclude选项
   optional bool debug_info = 7 [default = false];   // 是否在Forward，Backward，Update时输出debug信息
 
-  repeated LayerParameter layer = 100;              // layer参数 
+  repeated LayerParameter layer = 100;              // 所有的layer参数数组 
   repeated V1LayerParameter layers = 2;             // 已废弃
 }
 ```
@@ -40,7 +48,7 @@ class Net {
       const int level = 0, const vector<string>* stages = NULL);
   virtual ~Net() {}
 
-  // 构造网络
+  // 构造网络，包括过滤layer，插入split层，新建所有blob、layer，确定BP的layer，确定共享的layer param等
   void Init(const NetParameter& param);
 
   // forward函数，按照layers_的顺序调用layer的Forward函数，并返回loss。同时调用所有回调函数before/after_forward_
