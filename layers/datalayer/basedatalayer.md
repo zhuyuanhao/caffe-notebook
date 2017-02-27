@@ -1,4 +1,4 @@
-`basedata`定义了数据层的基类，包含`BaseDataLayer`和`BasePrefetchingDataLayer`，提供了以线程预取的方式读取数据的能力。
+`BaseDataLayer`和`BasePrefetchingDataLayer`定义了数据读取层的基类，提供了以线程预取的方式读取数据的能力。
 
 # 文件
 ```
