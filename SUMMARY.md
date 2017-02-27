@@ -21,6 +21,7 @@
   * [datatransformer](layers/datalayer/datatransformer.md)
   * [basedata](layers/datalayer/basedata.md)
   * [imagedata](layers/datalayer/imagedata.md)
+  * [data](layers/datalayer/data.md)
 * [CNN层](layers/cnnlayer.md)
 * [RNN层](layers/rnnlayer.md)
 * [通用层](layers/commonlayer.md)
