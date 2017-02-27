@@ -32,7 +32,7 @@
 
 ## Solver分析
 
-* [solver分类概述](solvers/readme.md)
+* [Solver概述](solvers/readme.md)
 
 ## 其他
 
