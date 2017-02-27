@@ -12,6 +12,7 @@
 * [layer](module/layer.md)
 * [layer注册机制](module/layer_register.md)
 * [net](module/net.md)
+* [solver](module/solver.md)
 
 ## 其他
 

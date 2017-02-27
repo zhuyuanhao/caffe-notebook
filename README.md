@@ -1,7 +1,5 @@
 # 代码分析
 ## 总体结构
-Net由Layer组成，Layer之间可以是任意的DAG关系。Layer之间通过Blob做数据传递，数据从Layer的bottom blob(s)传输到top blob(s)。
-
 Caffe使用Protobuf文本格式（plaintext protocol buffer schema）定义Solver、Net、Layer。描述这些组件的文本格式的定义都放在caffe.proto文件中。
 
 ## 输入数据
@@ -39,22 +37,6 @@ http://caffe.berkeleyvision.org/tutorial/layers.html
 Data (Layer)
 数据输入层一般只有Top的Blobs，包括data blob和label blob。
 数据会被预处理，并且使用prefetch优化，即计算当前数据时，预先读取下一个batch的数据。
-
-### Net
-
-### Solver
-Solver负责网络参数的更新，通过使用不同的规则控制梯度（gradients）更新到参数（parameter）中的方式。
-主要类型：SGD，AdaDelta，AdaGrad，Adam，Nesterov，RMSProp
-http://caffe.berkeleyvision.org/tutorial/solver.html
-参数：
-base_lr表示基础学习率，lr_policy用于控制学习率在每次迭代中的调整，可以设置为下面这些值，相应的学习率的计算为：
-  - - fixed:　　 保持base_lr不变.
-  - - step: 　　 如果设置为step,则还需要设置一个stepsize, 返回 base_lr * gamma ^ (floor(iter / stepsize)),其中iter表示当前的迭代次数
-  - - exp: 　　返回base_lr * gamma ^ iter， iter为当前迭代次数
-  - - inv:　　 如果设置为inv,还需要设置一个power, 返回base_lr * (1 + gamma * iter) ^ (- power)
-  - - multistep: 如果设置为multistep,则还需要设置一个stepvalue。这个参数和step很相似，step是均匀等间隔变化，而multistep则是根据 stepvalue值变化
-  - - poly: 　　 学习率进行多项式误差, 返回 base_lr (1 - iter/max_iter) ^ (power)
-  - - sigmoid:　学习率进行sigmod衰减，返回 base_lr ( 1/(1 + exp(-gamma * (iter - stepsize))))
 
 ## 操作接口
 http://caffe.berkeleyvision.org/tutorial/interfaces.html

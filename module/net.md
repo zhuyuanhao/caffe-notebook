@@ -5,14 +5,18 @@
 初始化时，`net`会生成所有需要的Blobs和Layers并建立它们之间的连接关系，检查是否满足DAG约束。所有的数据计算和传递都是通过`net`中的相应函数控制。
 
 `net`本身并不考虑是在CPU还是GPU上运算，通过`Caffe::mode()`和`Caffe::set_mode()`函数，各个Blobs和Layers自己选择是在CPU还是GPU上执行。
-
-# 依赖
-1. `InsertSplit()`函数用于为`net`中的需要被多个`layer`使用的每个`bottom blob`添加一个`_split`层，输入一个`blob`，输出多个`blob`供其他`layer`使用。定义文件
+# 文件
 ```
 include/caffe/util/insert_splits.hpp
 src/caffe/util/insert_splits.cpp
+include/caffe/net.hpp
+src/caffe/net.cpp
 ```
-
+# 依赖
+1. `InsertSplit()`函数用于为被多个`layer`或作为`loss`使用的每个`blob`添加一个`_split`层，输入一个`blob`，输出多个`blob`供其他`layer`或`loss`使用。定义文件
+```cpp
+void InsertSplits(const NetParameter& param, NetParameter* param_split);
+```
 1. NetParameter用于描述网络
 
 ```protobuf
