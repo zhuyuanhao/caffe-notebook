@@ -2,13 +2,7 @@
 ## 总体结构
 Caffe使用Protobuf文本格式（plaintext protocol buffer schema）定义Solver、Net、Layer。描述这些组件的文本格式的定义都放在caffe.proto文件中。
 
-## 输入数据
-caffe输入数据可以是数据库（lmdb(default)，leveldb），内存文件，磁盘文件（hdf5/.mat/图片格式）等格式。caffe为我们提供tools/convert_imageset.cpp文件。编译之后，生成对应的可执行文件放在 buile/tools/ 下面，这个文件的作用就是用于将图片文件转换成caffe框架中能直接使用的db文件。
-caffe还提供了一个计算均值的文件tools/compute_image_mean.cpp，计算图片集的均值，保存在.binaryproto文件中供读取时做data_transform使用。
-lmdb和leveldb
-- 它们都是键/值对（Key/Value Pair）嵌入式数据库管理系统编程库。
-- 虽然lmdb的内存消耗是leveldb的1.1倍，但是lmdb的速度比leveldb快10%至15%，更重要的是lmdb允许多种训练模型同时读取同一组数据集。
-- 因此lmdb取代了leveldb成为Caffe默认的数据集生成格式。
+
 
 ## 代码组件
 

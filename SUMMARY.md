@@ -16,17 +16,18 @@
 
 ## Layer分析
 
-* [layer分类概述](layers/readme.md)
+* [layer概述](layers/readme.md)
 * [数据读取层](layers/datalayer.md)
-* [CNN视觉层](layers/cnnlayer.md)
-* [RNN相关层](layers/rnnlayer.md)
+  * [datatransformer](layers/datalayer/datatransformer.md)
+  * [basedata](layers/datalayer/basedata.md)
+  * [imagedata](layers/datalayer/imagedata.md)
+* [CNN层](layers/cnnlayer.md)
+* [RNN层](layers/rnnlayer.md)
 * [通用层](layers/commonlayer.md)
 * [正则化层](layers/normalizationlayer.md)
 * [激活函数层](layers/activationlayer.md)
 * [工具层](layers/utilitylayer.md)
 * [损失层](layers/losslayer.md)
-
-
 
 ## Solver分析
 
