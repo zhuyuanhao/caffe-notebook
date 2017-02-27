@@ -7,16 +7,16 @@
 
 ## 组件分析
 
-* [syncedmem](module/syncedmem.md)
-* [blob](module/blob.md)
-* [layer](module/layer.md)
-* [layer注册机制](module/layer_register.md)
-* [net](module/net.md)
-* [solver](module/solver.md)
+* [SyncedMemory](module/syncedmem.md)
+* [Blob](module/blob.md)
+* [Layer](module/layer.md)
+* [Layer注册机制](module/layer_register.md)
+* [Net](module/net.md)
+* [Solver](module/solver.md)
 
 ## Layer分析
 
-* [layer概述](layers/readme.md)
+* [Layer概述](layers/readme.md)
 * [数据读取层](layers/datalayer.md)
   * [DataTransformer](layers/datalayer/datatransformer.md)
   * [BaseDataLayer](layers/datalayer/basedatalayer.md)
