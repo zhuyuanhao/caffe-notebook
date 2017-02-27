@@ -13,30 +13,7 @@ lmdb和leveldb
 ## 代码组件
 
 ### Layer
-主要类型：
-http://caffe.berkeleyvision.org/tutorial/layers.html
-https://github.com/Yangqing/caffe/wiki/Convolution-in-Caffe:-a-memo
-Vision Layer：Convolution，Pooling，LocalResponseNormalization，
-Activation Layer：ReLU，Sigmoid，BNLL
-Data Layer：Data，MemoryData，HDF5Data
-Common Layer：InnerProduct，Reshape
-相应的头文件为：
-- layer.hpp: 父类Layer，定义所有layer的基本接口。
-- data_layers.hpp: 继承自父类Layer，定义与输入数据操作相关的子Layer，例如DataLayer，HDF5DataLayer和ImageDataLayer等。
-- vision_layers.hpp: 继承自父类Layer，定义与特征表达相关的子Layer，例如ConvolutionLayer，PoolingLayer和LRNLayer等。
-- neuron_layers.hpp: 继承自父类Layer，定义与非线性变换相关的子Layer，例如ReLULayer，TanHLayer和SigmoidLayer等。
-- loss_layers.hpp: 继承自父类Layer，定义与输出误差计算相关的子Layer，例如EuclideanLossLayer，SoftmaxWithLossLayer和HingeLossLayer等。
-- common_layers.hpp: 继承自父类Layer，定义与中间结果数据变形、逐元素操作相关的子Layer，例如ConcatLayer，InnerProductLayer和SoftmaxLayer等。
-- layer_factory.hpp: Layer工厂模式类，负责维护现有可用layer和相应layer构造方法的映射表。
 
-Loss (Layer)
-计算损失函数，决定了最终模型的类型，分类、预测等。
-主要类型：Softmax，Euclidean，Hinge
-http://caffe.berkeleyvision.org/tutorial/layers.html
-
-Data (Layer)
-数据输入层一般只有Top的Blobs，包括data blob和label blob。
-数据会被预处理，并且使用prefetch优化，即计算当前数据时，预先读取下一个batch的数据。
 
 ## 操作接口
 http://caffe.berkeleyvision.org/tutorial/interfaces.html
