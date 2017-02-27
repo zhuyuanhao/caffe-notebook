@@ -14,6 +14,12 @@
 * [net](module/net.md)
 * [solver](module/solver.md)
 
+## Layer分析
+* [layer分类概述](layers/readme.md)
+
+## Solver分析
+* [solver分类概述](solvers/readme.md)
+
 ## 其他
 
 * [相关工具使用](other_tools.md)
