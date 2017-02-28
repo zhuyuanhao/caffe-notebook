@@ -21,6 +21,9 @@ base_data_layer.cu
 
 image_data_layer.hpp
 image_data_layer.cpp
+data_layer.hpp
+data_layer.cpp
+
 # CNN层
 # RNN层
 # 通用层
@@ -51,7 +54,6 @@ image_data_layer.cpp
 ├── cudnn_sigmoid_layer.hpp
 ├── cudnn_softmax_layer.hpp
 ├── cudnn_tanh_layer.hpp
-├── data_layer.hpp
 ├── deconv_layer.hpp
 ├── dropout_layer.hpp
 ├── dummy_data_layer.hpp
@@ -140,7 +142,6 @@ image_data_layer.cpp
 ├── cudnn_softmax_layer.cu
 ├── cudnn_tanh_layer.cpp
 ├── cudnn_tanh_layer.cu
-├── data_layer.cpp
 ├── deconv_layer.cpp
 ├── deconv_layer.cu
 ├── dropout_layer.cpp

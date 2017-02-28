@@ -7,6 +7,7 @@
 
 ## 组件分析
 
+* [Database](module/database.md)
 * [SyncedMemory](module/syncedmem.md)
 * [Blob](module/blob.md)
 * [Layer](module/layer.md)
@@ -23,6 +24,7 @@
   * [ImageDataLayer](layers/datalayer/imagedatalayer.md)
   * [DataLayer](layers/datalayer/datalayer.md)
 * [CNN层](layers/cnnlayer.md)
+  * [ConvolutionLayer](layers/cnnlayer/convolutionlayer.md)
 * [RNN层](layers/rnnlayer.md)
 * [通用层](layers/commonlayer.md)
 * [正则化层](layers/normalizationlayer.md)

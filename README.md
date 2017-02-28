@@ -2,13 +2,6 @@
 ## 总体结构
 Caffe使用Protobuf文本格式（plaintext protocol buffer schema）定义Solver、Net、Layer。描述这些组件的文本格式的定义都放在caffe.proto文件中。
 
-
-
-## 代码组件
-
-### Layer
-
-
 ## 操作接口
 http://caffe.berkeleyvision.org/tutorial/interfaces.html
 ### 命令行操作
