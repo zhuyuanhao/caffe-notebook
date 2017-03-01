@@ -25,6 +25,9 @@ data_layer.hpp
 data_layer.cpp
 
 # CNN层
+base_conv_layer.hpp
+base_conv_layer.cpp
+
 # RNN层
 # 通用层
 # 正则化层
@@ -36,8 +39,6 @@ data_layer.cpp
 ├── absval_layer.hpp
 ├── accuracy_layer.hpp
 ├── argmax_layer.hpp
-├── base_conv_layer.hpp
-├── 
 ├── batch_norm_layer.hpp
 ├── batch_reindex_layer.hpp
 ├── bias_layer.hpp
@@ -108,8 +109,6 @@ data_layer.cpp
 ├── absval_layer.cu
 ├── accuracy_layer.cpp
 ├── argmax_layer.cpp
-├── base_conv_layer.cpp
-
 ├── batch_norm_layer.cpp
 ├── batch_norm_layer.cu
 ├── batch_reindex_layer.cpp
