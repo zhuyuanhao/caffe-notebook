@@ -2,12 +2,20 @@
 
 # 文件
 ```
+include/caffe/util/im2col.hpp
+src/caffe/util/im2col.cpp
 include/caffe/layers/base_conv_layer.hpp
 src/caffe/layers/base_conv_layer.cpp
 ```
 
 # 原理
-1. `group convolution`用于模拟`Alex Krizhevsky`最初的论文中的模型，其他地方没啥用。当`group=2`时，前一半的filters只和输入数据的前一半channel做卷积，后一半filters只和输入数据的后一半channel做卷积。
+1. 做卷积时的卷积核的`kernel_channel`数一定要等于输入数据的`in_channel`数。
+1. 计算卷积时使用`weight矩阵 * im2col矩阵`就得到最终结果。
+  * `weight矩阵`可以看作一个`[out_channel, kernel_channel*kernel_h*kernel_w]`的矩阵，每行是一个完整的kernel，weight blob中原本的排列方式就满足这种要求。
+  * `im2col矩阵`是由一张`in_channel*height*width`的图片转成的一个维度为`[in_channel*kernel_h*kernel_w, kernel滑动总数]`的矩阵。其中每一列是一个原图的子块，大小等于一个完整kernel的大小。列数是kernel滑动子块的总数，等于`[(height+2*pad_h-kernel_h)/stride_h+1] * [(width+2*pad_w-kernel_w)/stride_w+1]`。`im2col.hpp/.cpp`文件提供了单张图片和矩阵之间的转换。
+  * 最终的结果是一个`[out_channel, kernel滑动总数]`的矩阵，每行看作一个二维feature map的一维展开
+1. `group convolution`用于模拟`Alex Krizhevsky`最初的论文中的模型，其他地方没啥用。当`group=2`时，前一半的kernel只和输入数据的前一半channel做卷积，后一半kernel只和输入数据的后一半channel做卷积。
+1. `dilated convolution`用于调整原图中做卷积的子块的元素间隔。当`dilation==2`时，原图子块是一个元素间间距为2的块。普通卷积所用的连续的`[channel, kernel_h, kernel_w]`的子块可以看做是`dilation==1`的实现。
 
 # 参数
 1. `BaseConvolutionLayer`，`ConvolutionLayer`和`DeconvolutionLayer`都是使用`ConvolutionParameter`做参数
