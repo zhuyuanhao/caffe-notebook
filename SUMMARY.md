@@ -41,5 +41,6 @@
 ## 其他
 
 * [相关工具使用](other_tools.md)
+* [BLAS库](other/blas.md)
 * [参考文档](reference.md)
 
