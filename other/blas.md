@@ -7,54 +7,39 @@ Level 3
 Matrix-matrix operations, e.g. $$C = \alpha A B + C$$    矩阵与矩阵的操作
 
 ## 函数名规则
+BLAS函数名SGEMM表示单精度的普通矩阵乘函数，其中各部分的参数说明如下。
 ### 操作
-DOT
-scalar product, x^T y
-AXPY
-vector sum, /alpha x + y
-MV
-matrix-vector product, A x
-SV
-matrix-vector solve, inv(A) x
-MM
-matrix-matrix product, A B
-SM
-matrix-matrix solve, inv(A) B
+函数名串  | 说明
+-------- | -------------
+DOT      | scalar product, x^T y
+AXPY     | vector sum, /alpha x + y
+MV       | matrix-vector product, A x
+SV       | matrix-vector solve, inv(A) x
+MM       | matrix-matrix product, A B
+SM       | matrix-matrix solve, inv(A) B
 ### 矩阵类型
-GE
-general   
-GB
-general band
-SY
-symmetric
-SB
-symmetric band
-SP
-symmetric packed
-HE
-hermitian
-HB
-hermitian band
-HP
-hermitian packed
-TR
-triangular
-TB
-triangular band
-TP
-triangular packed
-Each operation is defined for four precisions,
+函数名串  | 说明
+-------- | -------------
+GE       | general   
+GB       | general band
+SY       | symmetric
+SB       | symmetric band
+SP       | symmetric packed
+HE       | hermitian
+HB       | hermitian band
+HP       | hermitian packed
+TR       | triangular
+TB       | triangular band
+TP       | triangular packed
 ### 数据类型
-S
-single real
-D
-double real
-C
-single complex
-Z
-double complex
+函数名串  | 说明
+-------- | -------------
+S        | single real
+D        | double real
+C        | single complex
+Z        | double complex
 
-Thus, for example, the name SGEMM stands for "single-precision general matrix-matrix multiply" and ZGEMM stands for "double-precision complex matrix-matrix multiply".
+
 
 因此，例如，命名为SGEMM的函数意思为“单精度普通矩阵乘法”，ZGEMM为“双精度复数矩阵乘法”。
 
