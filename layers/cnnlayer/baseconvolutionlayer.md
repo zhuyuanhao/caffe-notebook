@@ -22,7 +22,7 @@ out_w == (in_w+2*pad_w-kernel_w)/stride_w+1
   * `im2col矩阵`是由一张`in_channel*height*width`的图片转成的一个维度为`[in_channel*kernel_h*kernel_w, kernel滑动总数]`的矩阵。其中每一列是一个原图三维子块的一维展开，大小等于group个kernel的元素数量和。列数是kernel滑动时产生的子块的总数，等于`out_h*out_w`。`im2col.hpp/.cpp`文件提供了单张图片和im2col矩阵之间的转换。
   * 最终的结果是一个`[out_channel, kernel滑动总数]`的矩阵，每行看作一个二维feature map的一维展开。
 1. 计算`bias`时，`bias矩阵`的维度为`[kernel_num, 1]`，和一个全1的`[1, out_h*out_w]`矩阵相乘，把结果和输出矩阵做矩阵加。相当于第`i`个`feature map`的所有元素都加上`bias[i]`。
-1. `group convolution`用于模拟`Alex Krizhevsky`最初的论文中的模型，其他地方没啥用。默认`group=1`，若`group>`，输入输出的数据大小不变，由于`kernel_channel = in_channel/group`，所以内部weight参数的行数（卷积核数量）不变，列数（卷积核大小）除以group，im2col矩阵行数列数都不变。每张图片需要做`group`次卷积，每次使用一个group的卷积核和一个group的input channel。`weight`子矩阵的大小为`[kernel_num/group, kernel_channel*kernel_h*kernel_w]`，`im2col`子矩阵的大小为`[in_channel/group*kernel_h*kernel_w, kernel滑动总数]`。每个kernel只会和input的某一组channel做卷积，同一个group的kernel会和相同的这组channel做卷积，所以不同group的weights子矩阵和im2col子矩阵可以分布在不同的GPU上。
+1. `group convolution`用于模拟`Alex Krizhevsky`最初的论文中的模型，其他地方没啥用。默认`group=1`，若`group>1`，输入输出的数据大小不变，由于`kernel_channel = in_channel/group`，所以内部weight参数的行数（卷积核数量）不变，列数（卷积核大小）除以group，im2col矩阵行数列数都不变。每张图片需要做`group`次卷积，每次使用一个group的卷积核和一个group的input channel。`weight`子矩阵的大小为`[kernel_num/group, kernel_channel*kernel_h*kernel_w]`，`im2col`子矩阵的大小为`[in_channel/group*kernel_h*kernel_w, kernel滑动总数]`。每个kernel只会和input的某一组channel做卷积，同一个group的kernel会和相同的这组channel做卷积，所以不同group的weights子矩阵和im2col子矩阵可以分布在不同的GPU上。
 1. `dilated convolution`用于调整原图中做卷积的子块的元素间隔。当`dilation==2`时，原图子块是一个元素间间距为2的块。普通卷积所用的连续的`[channel, kernel_h, kernel_w]`的子块可以看做是`dilation==1`的实现。通过`kernel_h/w`计算`out_h/w`时，需要使用`kernel_h_with_dilation = dilation_h * (kernel_h - 1) + 1)`。
 
 # 参数
