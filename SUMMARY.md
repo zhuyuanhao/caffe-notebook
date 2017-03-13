@@ -26,7 +26,7 @@
 * [CNN层](layers/cnnlayer.md)
   * [BaseConvolutionLayer](layers/cnnlayer/baseconvolutionlayer.md)
   * [Im2colLayer](layers/cnnlayer/im2collayer.md)
-  * [CropLayer](layers/cnnlayer/im2collayer.md)
+  * [CropLayer](layers/cnnlayer/croplayer.md)
   * [ConvolutionLayer](layers/cnnlayer/convolutionlayer.md)
   * [DeconvolutionLayer](layers/cnnlayer/deconvolutionlayer.md)
 
