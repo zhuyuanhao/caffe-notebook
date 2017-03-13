@@ -26,6 +26,7 @@
 * [CNN层](layers/cnnlayer.md)
   * [BaseConvolutionLayer](layers/cnnlayer/baseconvolutionlayer.md)
   * [ConvolutionLayer](layers/cnnlayer/convolutionlayer.md)
+  * [DeconvolutionLayer](layers/cnnlayer/deconvolutionlayer.md)
 
 * [RNN层](layers/rnnlayer.md)
 * [通用层](layers/commonlayer.md)

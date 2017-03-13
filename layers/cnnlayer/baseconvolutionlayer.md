@@ -67,7 +67,7 @@ message ConvolutionParameter {
   optional uint32 stride_h = 13;
   optional uint32 stride_w = 14;
 
-  optional uint32 group = 5 [default = 1];      // group convolution时的组数
+  optional uint32 group = 5 [default = 1];      // group convolution时的组大小
 
   optional FillerParameter weight_filler = 7;   // 权重weight的填充器
   optional FillerParameter bias_filler = 8;     // 偏置bias的填充器
@@ -78,7 +78,8 @@ message ConvolutionParameter {
   }
   optional Engine engine = 15 [default = DEFAULT];
 
-  // channel维度的下标
+  // channel维度的下标，比如输入是(N, C, D, H, W)，axis==1表示以
+  // (D, H, W)作输入图片，和(C/group)个通道的卷积核作N次卷积
   optional int32 axis = 16 [default = 1];
   // 是否强制使用普通的N维im2col，目前2维的有特殊实现
   optional bool force_nd_im2col = 17 [default = false];
