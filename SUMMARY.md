@@ -29,7 +29,7 @@
   * [CropLayer](layers/cnnlayer/croplayer.md)
   * [ConvolutionLayer](layers/cnnlayer/convolutionlayer.md)
   * [DeconvolutionLayer](layers/cnnlayer/deconvolutionlayer.md)
-
+  * [PoolingLayer](layers/cnnlayer/poolinglayer.md)
 * [RNN层](layers/rnnlayer.md)
 * [通用层](layers/commonlayer.md)
 * [正则化层](layers/normalizationlayer.md)
