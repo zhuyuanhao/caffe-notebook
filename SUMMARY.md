@@ -59,7 +59,7 @@
   * [BiasLayer](layers/normalizationlayer/biaslayer.md)
   * [ScaleLayer](layers/normalizationlayer/scalelayer.md)
 * [工具层](layers/utilitylayer.md)
-* [损失层](layers/losslayer.md)
+* [Loss层](layers/losslayer.md)
 
 ## Solver分析
 
