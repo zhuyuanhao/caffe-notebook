@@ -1,4 +1,4 @@
-`embed`的作用主要在于学习词语的distributed representation并将极其稀疏的one-hot编码的词语进行降维。`EmbedLayer`的作用相当于在`InnerProductLayer`之前先进行`embed`操作。
+`embed`的作用主要在于学习词语的distributed representation并将极其稀疏的one-hot编码的词语进行降维。`EmbedLayer`的相当于使用one-hot编码作为输入的`InnerProductLayer`。
 
 # 文件
 ```
