@@ -1,3 +1,5 @@
+MVN层将输入标准化为0-mean和1-variance
+
 # 文件
 ```
 include/caffe/layers/mvn_layer.hpp
