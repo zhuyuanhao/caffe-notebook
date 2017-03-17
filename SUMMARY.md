@@ -11,7 +11,7 @@
 * [SyncedMemory](module/syncedmem.md)
 * [Blob](module/blob.md)
 * [Layer](module/layer.md)
-* [Layer注册机制](module/layer_register.md)
+* [Layer注册](module/layer_register.md)
 * [Net](module/net.md)
 * [Solver](module/solver.md)
 
@@ -43,7 +43,6 @@
   * [LRNLayer](layers/normalizationlayer/lrnlayer.md)
   * [MVNLayer](layers/normalizationlayer/mvnlayer.md)
   * [BatchNormLayer](layers/normalizationlayer/batchnormlayer.md)
-
 * [激活层](layers/activationlayer.md)
   * [ReLULayer](layers/activationlayer/relulayer.md)
   * [PReLULayer](layers/activationlayer/prelulayer.md)
