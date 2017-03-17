@@ -59,6 +59,15 @@
   * [ScaleLayer](layers/normalizationlayer/scalelayer.md)
 * [工具层](layers/utilitylayer.md)
 * [Loss层](layers/losslayer.md)
+  * [LossLayer](layers/losslayer/losslayer.md)
+  * [MultinomialLogisticLossLayer](layers/losslayer/multinomiallogisticlosslayer.md)
+  * [InfogainLossLayer](layers/losslayer/infogainlosslayer.md)
+  * [SoftmaxWithLossLayer](layers/losslayer/softmaxwithlosslayer.md)
+  * [EuclideanLossLayer](layers/losslayer/euclideanlosslayer.md)
+  * [HingeLossLayer](layers/losslayer/hingelosslayer.md)
+  * [SigmoidCrossEntropyLossLayer](layers/losslayer/sigmoidcrossentropylosslayer.md)
+  * [AccuracyLayer](layers/losslayer/accuracylayer.md)
+  * [ContrastiveLossLayer](layers/losslayer/contrastivelosslayer.md)
 
 ## Solver分析
 
