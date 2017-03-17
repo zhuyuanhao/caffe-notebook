@@ -11,5 +11,7 @@ src/caffe/layers/recurrent_layer.cu
 
 # 参数
 ```protobuf
-optional RecurrentParameter recurrent_param = 146;
+message LayerParameter {
+  optional RecurrentParameter recurrent_param = 146;
+}
 ```
