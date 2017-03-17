@@ -11,7 +11,7 @@
 * [SyncedMemory](module/syncedmem.md)
 * [Blob](module/blob.md)
 * [Layer](module/layer.md)
-* [Layer注册](module/layer_register.md)
+* [Layer工厂](module/layer_register.md)
 * [Net](module/net.md)
 * [Solver](module/solver.md)
 
