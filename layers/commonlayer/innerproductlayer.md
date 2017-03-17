@@ -12,6 +12,9 @@ src/caffe/layers/inner_product_layer.cu
 # 参数
 
 ```protobuf
+
+```
+```protobuf
 optional InnerProductParameter inner_product_param = 17;
 message InnerProductParameter {
   optional uint32 num_output = 1; 
