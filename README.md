@@ -1,3 +1,20 @@
+Caffe的全称是Convolutinal Architecture for Fast Feature Embedding。核心开发语言是C++和CUDA，支持命令行、Python和MATLAB接口。支持CPU和GPU执行，支持单机多卡并行，不支持多机并行。
+
+依赖库
+matlab
+opencv
+python - anaconda
+
+boost
+gflags
+glog
+leveldb/lmdb
+protobuf
+hdf5
+snappy
+
+MKL >= OpenBlas > AtLas
+
 # 代码分析
 ## 总体结构
 Caffe使用Protobuf文本格式（plaintext protocol buffer schema）定义Solver、Net、Layer。描述这些组件的文本格式的定义都放在caffe.proto文件中。
