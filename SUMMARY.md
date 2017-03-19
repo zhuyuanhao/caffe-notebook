@@ -18,6 +18,8 @@
 ## Layer分析
 
 * [Layer概述](layers/readme.md)
+* [公共组件](layers/commonmodule.md)
+
 * [数据读取层](layers/datalayer.md)
   * [DataTransformer](layers/datalayer/datatransformer.md)
   * [BaseDataLayer](layers/datalayer/basedatalayer.md)
