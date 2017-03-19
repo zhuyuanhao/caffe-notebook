@@ -1,6 +1,7 @@
 Filler用于为Blob填充数据，可以是weight或者bias，但只填充Blob的CPU data数组的数据。
 
 填充器种类包括：
+
 * ConstantFiller：常量
 * GaussianFiller：高斯分布（正态分布）
 * UniformFiller：均匀分布
@@ -9,10 +10,11 @@ Filler用于为Blob填充数据，可以是weight或者bias，但只填充Blob�
 * MSRAFiller：
 * BilinearFiller：双线性
 
-它们都使用FillerParameter设置参数，不同的填充器使用不同的参数。
+它们都使用FillerParameter设置参数，不同的填充器使用不同的参数。  
 实现中，通过工厂方法`Filler<Dtype>* GetFiller(const FillerParameter& param);`获取相应的填充器实例。
 
 # 文件
+
 ```
 include/caffe/filler.hpp
 ```
@@ -20,6 +22,7 @@ include/caffe/filler.hpp
 # 原理
 
 # 参数
+
 ```protobuf
 message FillerParameter {
   optional string type = 1 [default = 'constant'];  // 字符串作类型
@@ -38,3 +41,6 @@ message FillerParameter {
   optional VarianceNorm variance_norm = 8 [default = FAN_IN];   // xavier,msra填充器的参数
 }
 ```
+
+
+
