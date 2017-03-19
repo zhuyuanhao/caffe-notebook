@@ -1,3 +1,5 @@
+`DummyDataLayer`产生一个或多个使用filler填充的blob作为输入层，主要用于测试。
+
 # 文件
 ```
 Header: ./include/caffe/layers/dummy_data_layer.hpp
@@ -5,6 +7,7 @@ CPU: ./src/caffe/layers/dummy_data_layer.cpp
 ```
 
 # 原理
+Dummy层对于常数输出blob只在LayerSetup阶段填充一次，在Forward阶段不填充。通过内部的布尔数组`vector<bool> refill_;`判断。
 
 # 参数
 ```protobuf
