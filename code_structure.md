@@ -1,5 +1,5 @@
 ## 代码结构
-```
+```bash
 caffe.cloc                // 配置：代码统计工具cloc
 .Doxyfile                 // 配置：文档生成工具doxygen
 .travis.yml               // 配置：持续集成工具TravisCI
