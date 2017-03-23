@@ -1,4 +1,5 @@
 ## 代码结构
+编译后的文件目录如下：
 ```bash
 caffe.cloc                // 配置：代码统计工具cloc
 .Doxyfile                 // 配置：文档生成工具doxygen
