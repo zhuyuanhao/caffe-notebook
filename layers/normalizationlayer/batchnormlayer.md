@@ -6,6 +6,9 @@ src/caffe/layers/batch_norm_layer.cu
 ```
 
 # 原理
+1. 对每个Channel，计算Batch内的所有图片的同Channel数据的mean和variance。
+2. 内部blobs_用于保存mean, variance和moving average factor，并设置learning rate为0，防止BP的时候修改。mean和variance有Channel个，moving average factor只有一个。
+
 
 # 参数
 ```protobuf
