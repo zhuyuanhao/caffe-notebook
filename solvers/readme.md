@@ -3,3 +3,6 @@
 * 如果在意更快的收敛，并且需要训练较深较复杂的网络时，推荐使用学习率自适应的优化方法。
 * Adadelta，RMSprop，Adam是比较相近的算法，在相似的情况下表现差不多。
 * 在想使用带动量的RMSprop，或者Adam的地方，大多可以使用Nadam取得更好的效果
+
+![](/assets/solver1.jpg)
+![](/assets/solver2.jpg)
