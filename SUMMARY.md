@@ -97,7 +97,8 @@
   * [SGD](solvers/sgd.md)
   * [Momentum](solvers/momentum.md)
   * [Nesterov](solvers/nesterov.md)
-  * AdaGrad
+  * [AdaGrad](solvers/adagrad.md)
+  * [Adadelta](solvers/adadelta.md)
   * RMSProp
   * Adam
 
