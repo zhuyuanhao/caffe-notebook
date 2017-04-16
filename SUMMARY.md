@@ -99,7 +99,7 @@
   * [Nesterov](solvers/nesterov.md)
   * [AdaGrad](solvers/adagrad.md)
   * [Adadelta](solvers/adadelta.md)
-  * RMSProp
+  * [RMSProp](solvers/rmsprop.md)
   * Adam
 
 ## 其他
