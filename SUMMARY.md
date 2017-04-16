@@ -96,6 +96,10 @@
 * [Solver概述](solvers/readme.md)
   * [SGD](solvers/sgd.md)
   * [Momentum](solvers/momentum.md)
+  * [Nesterov](solvers/nesterov.md)
+  * AdaGrad
+  * RMSProp
+  * Adam
 
 ## 其他
 
