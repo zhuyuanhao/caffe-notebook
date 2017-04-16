@@ -100,7 +100,7 @@
   * [AdaGrad](solvers/adagrad.md)
   * [Adadelta](solvers/adadelta.md)
   * [RMSProp](solvers/rmsprop.md)
-  * Adam
+  * [Adam](solvers/adam.md)
 
 ## 其他
 
