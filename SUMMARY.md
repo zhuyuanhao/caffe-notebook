@@ -94,6 +94,7 @@
 ## Solver分析
 
 * [Solver概述](solvers/readme.md)
+  * [SGD](solvers/sgd.md)
 
 ## 其他
 
