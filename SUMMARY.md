@@ -95,6 +95,7 @@
 
 * [Solver概述](solvers/readme.md)
   * [SGD](solvers/sgd.md)
+  * [Momentum](solvers/momentum.md)
 
 ## 其他
 
