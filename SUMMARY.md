@@ -101,6 +101,8 @@
   * [Adadelta](solvers/adadelta.md)
   * [RMSProp](solvers/rmsprop.md)
   * [Adam](solvers/adam.md)
+  * [Adamax](solvers/adamax.md)
+  * [Nadam](solvers/nadam.md)
 
 ## 其他
 
